@@ -7,11 +7,13 @@
 
 import requests
 
-page = "https://ipapi.co/json/"
+page = "http://ip-api.com/json/"
 
 def location():
     getData = requests.get(page)
     data = getData.json()
-    lat = data["latitude"]
-    lon = data["longitude"]    
+    lat = data["lat"]
+    lon = data["lon"]    
     return lon, lat
+
+#print(location()) #Debugging

@@ -1,37 +1,54 @@
 # ADSB-TUI
 
+![ADSB-TUI A Live Flight Dashboard](ADSB-tui.png)
+
 ## What is it?
 
-Adsb-tui is a terminal user interface that gives you aircraft information of all aircraft flying with a 250 mile radius. The Program is made in python using textual and api's from adsb.lol and ipapi.co. The project was made as a execise to get rid of some rust in my programming skills. The thought behind choosing this was I needed somthing that I would use to finish the project. 
+Adsb-tui is a terminal user interface that gives you aircraft information of all aircraft flying with a 250 mile radius. The Program is made in python using textual and api's from adsb.lol, adsb.fi, airplanes.live and ip-api.com. The project was made as a exercise to get rid of some rust in my programming skills. The thought behind choosing this was I needed something that I would use to finish the project. 
 
 ## Features
 
-ADSB-TUI currently has Callsign, Aircraft Type, Registration, Altitude and Speed rows to display infomation. I am planning to add a radar screen with the aircrafts location in respect with the user's location. Other planned features is ssh access so you don't need to install the program, colours for aircraft that have declared an emergency, aircraft that are on the ground and military aircraft.
+ADSB-TUI has Callsign, Aircraft Type, Registration, Altitude, Speed, Year the aircraft was built and Owner columns. There is also colour indication for military aircraft (green) and aircraft with emergencies (red). On the right hand side there is a radar with all of the aircraft in respect to your own location which is located when you first start the application.
 
 ## Project Structure
 
-~~~
+```
 ├── displayEngine.py
+├── radarCanvas.py
+├── dataFilter.py
+├── dataMerger.py
 ├── dataCollector.py
 ├── ipLocation.py
-└── dataFilter.py
-~~~
+└── style.tcss
+```
 
 #### `displayEngine.py`
 
-- Entry point to the application. Houses the UI and timer for the colection of data.
+- Entry point to the application. Houses the UI and timer for the collection of data.
+
+#### `radarCanvas.py`
+
+- Makes and displays all of the aircraft on a radar screen with respect to your location.
 
 #### `dataCollector.py`
 
 - Handles the network layer, fetching raw JSON data from the API endpoints.
 
+#### `dataMerger.py`
+
+- Merges data from the three adsb api's with pandas to have one complete database. 
+
+#### `dataFilter.py`
+
+- Filters the data collected from the database and packages it for the UI.
+
 #### `ipLocation.py`
 
 - Automatically geolocates your machine on the start of the application to dynamically set the coordinates of the radar. 
 
-#### `dataFilter.py`
+#### `style.tcss`
 
-- Filters the data collected from the json and packages it for the UI
+- The styling for the textual program. 
 
 ## How To Use
 
@@ -41,12 +58,12 @@ Must be using Python 3.10+.
 
 ### Setup
 
-~~~ git clone https://github.com/JackEllison4/ADSB-tui.git
+``` git clone https://github.com/JackEllison4/ADSB-tui.git
 cd ADSB-tui
 python3 -m venv .venv
-source .venv/bin/bin/activate
-pip install textual requests 
-~~~
+source .venv/bin/activate
+pip install textual requests pandas
+```
 
 ### Run
 
@@ -60,10 +77,11 @@ python3 displayEngine.py
 | Key | Action |
 | :--- | :--- |
 | `q` | Exit the application safely |
-| `d` | Toggle between Dark and Light mode |
 | `Up` / `Down` | Scroll through the aircraft list |
-| `Page Up` / `Page Down` | Jump scroll through the list |
-| `Home` / `End` | Jump straight to the top or bottom of the list |
+
+## Future Changes
+
+At somepoint in the future I plan on hosting this via SSH but apart from that this project is done.
 
 ## License
 

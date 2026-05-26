@@ -1,0 +1,24 @@
+/* style.tcss */
+
+#app-layout {
+    layout: grid;
+    grid-size: 2 1;
+    grid-columns: 1fr 82;
+    margin: 1;
+    height: 100%;
+}
+
+#telemetry-table {
+    border: heavy $panel;
+    height: 100%;
+    width: 100%;
+}
+
+#radar-screen {
+    border: double $success;
+    background: $background;
+    color: $text;
+    align: center middle;
+    height: 100%;
+    width: 100%;
+}
