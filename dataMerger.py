@@ -11,31 +11,21 @@ from dataCollector import colector
 def merger():
     dataLOL, dataFI, dataLive = colector()
     
-    numAcLOL = dataLOL.get('total', 0) if isinstance(dataLOL, dict) else 0
-    dataACLOL = dataLOL.get('ac', []) if isinstance(dataLOL, dict) else []
-    numAcLive = dataLive.get('total', 0) if isinstance(dataLive, dict) else 0
-    dataACLive = dataLive.get('ac', []) if isinstance(dataLive, dict) else []
-    numAcFI = dataFI.get('total', 0) if isinstance(dataFI, dict) else 0
-    dataACFI = dataFI.get('ac', []) if isinstance(dataFI, dict) else []
+    numAcLOL = dataLOL['total']
+    dataACLOL = dataLOL['ac']
+    numAcLive = dataLive['total']
+    dataACLive = dataLive['ac']
+    numAcFI = dataFI['total']
+    dataACFI = dataFI['ac']
 
     df_lol = pd.DataFrame(dataACLOL)
     df_fi = pd.DataFrame(dataACFI)
     df_live = pd.DataFrame(dataACLive)
 
-    if not df_lol.empty and 'hex' in df_lol.columns:
-        df_lol = df_lol.set_index('hex')
-    else:
-        df_lol = pd.DataFrame(columns=['hex']).set_index('hex')
 
-    if not df_fi.empty and 'hex' in df_fi.columns:
-        df_fi = df_fi.set_index('hex')
-    else:
-        df_fi = pd.DataFrame(columns=['hex']).set_index('hex')
-
-    if not df_live.empty and 'hex' in df_live.columns:
-        df_live = df_live.set_index('hex')
-    else:
-        df_live = pd.DataFrame(columns=['hex']).set_index('hex')
+    df_lol = df_lol.set_index('hex')
+    df_fi = df_fi.set_index('hex')
+    df_live = df_live.set_index('hex')
 
     halfMergedData = df_lol.combine_first(df_fi)
     mergedData = halfMergedData.combine_first(df_live)
@@ -43,8 +33,6 @@ def merger():
     numAC = max(numAcLOL, numAcFI, numAcLive)
     
     return mergedData, numAC
-
-
 
 #-------------------------------------------------------------------
 # Debugging

@@ -33,23 +33,28 @@ def adsb_filter():
         speed.append(i.gs)   
         emergency.append(i.emergency if isinstance(i.emergency, str) else 'none')
         military.append(True if (pd.notna(i.dbFlags) and isinstance(i.dbFlags, (int, float)) and int(i.dbFlags) & 1) else False)
-        
         year_val = getattr(i, 'year', None)
         owner_val = getattr(i, 'ownOp', None)
+        
         if pd.notna(year_val) and year_val != '':
             try:
                 year.append(str(int(float(year_val))))
+            
             except (ValueError, TypeError):
                 year.append('N/A')
+        
         else: 
             year.append('N/A')
         
         if pd.notna(owner_val):
             cleaned_owner = str(owner_val).strip()
+            
             if cleaned_owner != '' and cleaned_owner.lower() not in ('nan', 'none'):
                 owner.append(cleaned_owner)
+            
             else:
                 owner.append('N/A')
+        
         else:
             owner.append('N/A')
 
